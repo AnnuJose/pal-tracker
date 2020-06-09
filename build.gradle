@@ -2,6 +2,7 @@
 plugins{
     id 'org.springframework.boot' version '2.2.2.RELEASE'
     id 'io.spring.dependency-management' version '1.0.8.RELEASE'
+   // id 'org.springframework' version '5.2.2.RELEASE'
     id 'java'
 }
 
@@ -10,5 +11,14 @@ repositories{
 }
 
 dependencies {
-    implementation 'org.springframework.boot:spring-boot-starter-web'
+   // implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'org.springframework.boot:spring-boot-starter'
+
+    implementation 'org.springframework.boot:spring-boot-starter-json'
+
+    implementation 'org.springframework.boot:spring-boot-starter-tomcat'
+    implementation 'org.springframework.boot:spring-boot-starter-validation'
+
+    implementation 'org.springframework:spring-web'
+    implementation 'org.springframework:spring-webmvc'
 }
