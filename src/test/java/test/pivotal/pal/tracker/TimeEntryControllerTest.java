@@ -32,10 +32,10 @@ public class TimeEntryControllerTest {
 
         doReturn(mock(DistributionSummary.class))
                 .when(meterRegistry)
-                .summary("timeEntry.summary");
+                .summary("timeEntryValue.summary");
         doReturn(mock(Counter.class))
                 .when(meterRegistry)
-                .counter("timeEntry.actionCounter");
+                .counter("timeEntryValue.actionCounter");
         controller = new TimeEntryController(timeEntryRepository,meterRegistry);
 
     }

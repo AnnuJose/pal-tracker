@@ -9,6 +9,10 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+import static org.springframework.http.ResponseEntity.ok;
+import static org.springframework.web.servlet.function.ServerResponse.created;
+import static org.springframework.web.servlet.function.ServerResponse.notFound;
+
 @RestController
 @RequestMapping("/time-entries")
 public class TimeEntryController {
@@ -22,8 +26,8 @@ public class TimeEntryController {
 
     {
         this.timeEntriesRepo = timeEntriesRepo;
-        timeEntrySummary = meterRegistry.summary("timeEntry.summary");
-        actionCounter = meterRegistry.counter("timeEntry.actionCounter");
+        timeEntrySummary = meterRegistry.summary("timeEntryValue.summary");
+        actionCounter = meterRegistry.counter("timeEntryValue.actionCounter");
     }
 
     @PostMapping
@@ -31,8 +35,17 @@ public class TimeEntryController {
         TimeEntry createdTimeEntry = timeEntriesRepo.create(timeEntry);
         actionCounter.increment();
         timeEntrySummary.record(timeEntriesRepo.list().size());
+
+
         return new ResponseEntity<>(createdTimeEntry, HttpStatus.CREATED);
     }
+
+
+    /*@PostMapping
+    public ResponseEntity<?> createCheck(@RequestBody TimeEntry timeEntry) {
+        TimeEntry createdTimeEntry = timeEntriesRepo.create(timeEntry);
+        return (ResponseEntity<?>) created(null).body(createdTimeEntry);
+    }*/
 
     @GetMapping("{id}")
     public ResponseEntity<TimeEntry> read(@PathVariable Long id) {
@@ -44,6 +57,8 @@ public class TimeEntryController {
         } else {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
+
+      //  return timeEntry==null?notFound().build():ok(timeEntry);
     }
 
     @GetMapping
